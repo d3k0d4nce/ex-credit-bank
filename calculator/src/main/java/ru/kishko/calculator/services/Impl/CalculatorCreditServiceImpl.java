@@ -62,7 +62,7 @@ public class CalculatorCreditServiceImpl implements CalculatorCreditService {
         return creditDto;
     }
 
-    private List<PaymentScheduleElementDto> calculatePaymentSchedule(CreditDto creditDto) {
+    public List<PaymentScheduleElementDto> calculatePaymentSchedule(CreditDto creditDto) {
         log.debug("Calculating payment schedule for credit: {}", creditDto); // Логирование начала расчета графика платежей
 
         List<PaymentScheduleElementDto> paymentSchedule = new ArrayList<>();

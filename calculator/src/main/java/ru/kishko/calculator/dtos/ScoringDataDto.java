@@ -1,8 +1,6 @@
 package ru.kishko.calculator.dtos;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 import ru.kishko.calculator.annotations.MinAge;
 import ru.kishko.calculator.enums.Gender;
@@ -15,6 +13,8 @@ import java.time.LocalDate;
 
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ScoringDataDto {
 
