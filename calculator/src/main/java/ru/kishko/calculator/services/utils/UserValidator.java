@@ -7,6 +7,7 @@ import ru.kishko.calculator.enums.EmploymentStatus;
 import ru.kishko.calculator.enums.Gender;
 import ru.kishko.calculator.enums.MaritalStatus;
 import ru.kishko.calculator.enums.Position;
+import ru.kishko.calculator.exceptions.CreditException;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -29,7 +30,7 @@ public class UserValidator {
         EmploymentStatus employmentStatus = data.getEmployment().getEmploymentStatus();
 
         switch (employmentStatus) {
-            case UNEMPLOYED -> throw new IllegalArgumentException("Refusal due to unemployed");
+            case UNEMPLOYED -> throw new CreditException("Refusal due to unemployed");
             case SELF_EMPLOYED -> creditDto.setRate(creditDto.getRate().add(BigDecimal.valueOf(1)));
             case BUSINESS_OWNER -> creditDto.setRate(creditDto.getRate().add(BigDecimal.valueOf(2)));
         }
@@ -46,7 +47,7 @@ public class UserValidator {
 
     private void checkLoanAmount(ScoringDataDto data) {
         if (data.getAmount().compareTo(data.getEmployment().getSalary().multiply(new BigDecimal("25"))) > 0) {
-            throw new IllegalArgumentException("Loan amount must not be greater than 25 times the salary.");
+            throw new CreditException("Loan amount must not be greater than 25 times the salary.");
         }
     }
 
@@ -62,7 +63,7 @@ public class UserValidator {
     private void checkAge(ScoringDataDto data) {
         int age = Period.between(data.getBirthdate(), LocalDate.now()).getYears();
         if (age < 20 || age > 65) {
-            throw new IllegalArgumentException("Age must be between 20 and 65 years old.");
+            throw new CreditException("Age must be between 20 and 65 years old.");
         }
     }
 
@@ -77,10 +78,10 @@ public class UserValidator {
 
     private void checkWorkExperience(ScoringDataDto data) {
         if (data.getEmployment().getWorkExperienceTotal() < 18) {
-            throw new IllegalArgumentException("Total work experience must be at least 18 months.");
+            throw new CreditException("Total work experience must be at least 18 months.");
         }
         if (data.getEmployment().getWorkExperienceCurrent() < 3) {
-            throw new IllegalArgumentException("Work experience at current employer must be at least 3 months.");
+            throw new CreditException("Work experience at current employer must be at least 3 months.");
         }
     }
 }
