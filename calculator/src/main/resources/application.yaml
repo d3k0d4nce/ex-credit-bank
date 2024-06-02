@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: calculator
+
+base:
+  interest:
+    rate: 15
+insurance:
+  cost: 100000
+  discount: 3
+salary:
+  client:
+    discount: 1
+
+server:
+  port: 8080
+
+springdoc:
+  swagger-ui:
+    url: /openapi.yaml
