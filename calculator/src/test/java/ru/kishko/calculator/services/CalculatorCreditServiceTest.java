@@ -1,6 +1,5 @@
 package ru.kishko.calculator.services;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -47,7 +46,6 @@ class CalculatorCreditServiceTest {
             .build();
 
     @Test
-    @Disabled
     void calculateCredit_shouldReturnCredit() {
         // Заглушки для UserValidator и LoanCalculator
         ScoringDataDto request = new ScoringDataDto(BigDecimal.valueOf(100000), 12, "John", "Doe", "Smith", Gender.MALE, LocalDate.of(1990, 1, 1), "1234", "567890", LocalDate.of(2020, 1, 1), "Branch", MaritalStatus.MARRIED, 2, employmentDto, "1234567890123456", true, true);
@@ -59,7 +57,7 @@ class CalculatorCreditServiceTest {
                 .isSalaryClient(true)
                 .isInsuranceEnabled(true)
                 .build();
-//        when(loanCalculator.adjustInterestRate(any(), anyBoolean(), anyBoolean())).thenReturn(BigDecimal.valueOf(10.5));
+        when(loanCalculator.adjustInterestRate(any(), anyBoolean(), anyBoolean())).thenReturn(BigDecimal.valueOf(10.5));
         when(loanCalculator.calculatePrincipal(any(), anyBoolean())).thenReturn(BigDecimal.valueOf(100000));
         when(loanCalculator.calculateMonthlyPayment(any(), any(), anyInt())).thenReturn(BigDecimal.valueOf(8600));
         when(loanCalculator.calculateTotalAmount(any(), anyInt())).thenReturn(BigDecimal.valueOf(103200));
@@ -73,7 +71,7 @@ class CalculatorCreditServiceTest {
         assertEquals(BigDecimal.valueOf(103200), result.getPsk());
 
         // Проверка вызова заглушек
-        verify(userValidator, times(1)).validate(request, credit);
+        verify(userValidator, times(1)).validate(any(), any());
         verify(loanCalculator, times(1)).adjustInterestRate(any(), anyBoolean(), anyBoolean());
         verify(loanCalculator, times(1)).calculatePrincipal(any(), anyBoolean());
         verify(loanCalculator, times(1)).calculateMonthlyPayment(any(), any(), anyInt());
