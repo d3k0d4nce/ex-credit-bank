@@ -1,6 +1,7 @@
 package ru.kishko.calculator.services.Impl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.kishko.calculator.dtos.CreditDto;
@@ -16,6 +17,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CalculatorCreditServiceImpl implements CalculatorCreditService {
@@ -28,10 +30,13 @@ public class CalculatorCreditServiceImpl implements CalculatorCreditService {
 
     @Override
     public CreditDto calculateCredit(ScoringDataDto request) {
+        log.info("Starting credit calculation for request: {}", request); // Логирование начала расчета
         return createCredit(request);
     }
 
     private CreditDto createCredit(ScoringDataDto scoringData) {
+        log.debug("Creating credit object from scoring data: {}", scoringData); // Логирование создания CreditDto
+
         CreditDto creditDto = CreditDto.builder()
                 .amount(scoringData.getAmount())
                 .rate(BASE_INTEREST_RATE)
@@ -53,10 +58,13 @@ public class CalculatorCreditServiceImpl implements CalculatorCreditService {
         creditDto.setPsk(totalAmount);
         creditDto.setPaymentSchedule(calculatePaymentSchedule(creditDto));
 
+        log.info("Credit calculation completed: {}", creditDto); // Логирование завершения расчета
         return creditDto;
     }
 
     private List<PaymentScheduleElementDto> calculatePaymentSchedule(CreditDto creditDto) {
+        log.debug("Calculating payment schedule for credit: {}", creditDto); // Логирование начала расчета графика платежей
+
         List<PaymentScheduleElementDto> paymentSchedule = new ArrayList<>();
         LocalDate startDate = LocalDate.now();
         BigDecimal remainingDebt = creditDto.getAmount();
@@ -82,6 +90,8 @@ public class CalculatorCreditServiceImpl implements CalculatorCreditService {
                             .build()
             );
         }
+
+        log.debug("Payment schedule calculated: {}", paymentSchedule); // Логирование завершения расчета графика платежей
         return paymentSchedule;
     }
 
