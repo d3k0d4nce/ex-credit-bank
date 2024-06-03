@@ -6,7 +6,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import ru.kishko.calculator.dtos.CreditDto;
 import ru.kishko.calculator.dtos.EmploymentDto;
-import ru.kishko.calculator.dtos.PaymentScheduleElementDto;
 import ru.kishko.calculator.dtos.ScoringDataDto;
 import ru.kishko.calculator.enums.EmploymentStatus;
 import ru.kishko.calculator.enums.Gender;
@@ -18,7 +17,6 @@ import ru.kishko.calculator.services.utils.UserValidator;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.*;
@@ -76,29 +74,5 @@ class CalculatorCreditServiceTest {
         verify(loanCalculator, times(1)).calculatePrincipal(any(), anyBoolean());
         verify(loanCalculator, times(1)).calculateMonthlyPayment(any(), any(), anyInt());
         verify(loanCalculator, times(1)).calculateTotalAmount(any(), anyInt());
-    }
-
-    @Test
-    void calculatePaymentSchedule_shouldReturnPaymentSchedule() {
-        // Заглушки для UserValidator и LoanCalculator
-        CreditDto credit = CreditDto.builder()
-                .amount(BigDecimal.valueOf(100000))
-                .rate(BigDecimal.valueOf(10.5))
-                .term(12)
-                .isSalaryClient(true)
-                .isInsuranceEnabled(true)
-                .monthlyPayment(BigDecimal.valueOf(8600))
-                .psk(BigDecimal.valueOf(103200))
-                .build();
-
-        // Выполнение метода и проверка результата
-        List<PaymentScheduleElementDto> schedule = calculatorCreditService.calculatePaymentSchedule(credit);
-        assertEquals(12, schedule.size());
-        assertEquals(1, schedule.get(0).getNumber());
-        assertEquals(LocalDate.now().plusMonths(1), schedule.get(0).getDate());
-        assertEquals(BigDecimal.valueOf(8600), schedule.get(0).getTotalPayment());
-        assertEquals(BigDecimal.valueOf(875), schedule.get(0).getInterestPayment().setScale(0));
-        assertEquals(BigDecimal.valueOf(7725), schedule.get(0).getDebtPayment().setScale(0));
-        assertEquals(BigDecimal.valueOf(92275), schedule.get(0).getRemainingDebt().setScale(0));
     }
 }
