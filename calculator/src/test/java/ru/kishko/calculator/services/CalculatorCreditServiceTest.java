@@ -47,14 +47,7 @@ class CalculatorCreditServiceTest {
     void calculateCredit_shouldReturnCredit() {
         // Заглушки для UserValidator и LoanCalculator
         ScoringDataDto request = new ScoringDataDto(BigDecimal.valueOf(100000), 12, "John", "Doe", "Smith", Gender.MALE, LocalDate.of(1990, 1, 1), "1234", "567890", LocalDate.of(2020, 1, 1), "Branch", MaritalStatus.MARRIED, 2, employmentDto, "1234567890123456", true, true);
-        CreditDto credit = CreditDto.builder()
-                .amount(BigDecimal.valueOf(100000))
-                .rate(BigDecimal.valueOf(10.5))
-                .term(12)
-                .psk(BigDecimal.valueOf(103200))
-                .isSalaryClient(true)
-                .isInsuranceEnabled(true)
-                .build();
+
         when(loanCalculator.adjustInterestRate(any(), anyBoolean(), anyBoolean())).thenReturn(BigDecimal.valueOf(10.5));
         when(loanCalculator.calculatePrincipal(any(), anyBoolean())).thenReturn(BigDecimal.valueOf(100000));
         when(loanCalculator.calculateMonthlyPayment(any(), any(), anyInt())).thenReturn(BigDecimal.valueOf(8600));
