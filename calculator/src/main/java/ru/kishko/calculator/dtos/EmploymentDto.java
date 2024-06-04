@@ -2,6 +2,7 @@ package ru.kishko.calculator.dtos;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import ru.kishko.calculator.annotations.ValidEnum;
 import ru.kishko.calculator.enums.EmploymentStatus;
 import ru.kishko.calculator.enums.Position;
 
@@ -15,6 +16,7 @@ import java.math.BigDecimal;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class EmploymentDto {
 
+    @ValidEnum(enumClass = EmploymentStatus.class)
     @NotNull(message = "Employment status must not be null")
     EmploymentStatus employmentStatus;
 
@@ -27,6 +29,7 @@ public class EmploymentDto {
     @DecimalMin(value = "10000", message = "Salary must be greater than or equal to 10000")
     BigDecimal salary;
 
+    @ValidEnum(enumClass = Position.class)
     @NotNull(message = "Position must not be null")
     Position position;
 

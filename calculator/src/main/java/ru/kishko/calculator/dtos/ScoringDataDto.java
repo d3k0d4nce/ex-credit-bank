@@ -3,8 +3,10 @@ package ru.kishko.calculator.dtos;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import ru.kishko.calculator.annotations.MinAge;
+import ru.kishko.calculator.annotations.ValidEnum;
 import ru.kishko.calculator.enums.Gender;
 import ru.kishko.calculator.enums.MaritalStatus;
+import ru.kishko.calculator.enums.Position;
 
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -37,6 +39,7 @@ public class ScoringDataDto {
     @Pattern(regexp = "^[a-zA-Z]{2,30}$", message = "Middle name must consist of 2 to 30 Latin letters")
     String middleName;
 
+    @ValidEnum(enumClass = Gender.class)
     @NotNull(message = "Gender must not be null")
     Gender gender;
 
@@ -62,6 +65,7 @@ public class ScoringDataDto {
     @Size(max = 100, message = "Passport issue branch must not exceed 100 characters")
     String passportIssueBranch;
 
+    @ValidEnum(enumClass = MaritalStatus.class)
     @NotNull(message = "Marital status must not be null")
     MaritalStatus maritalStatus;
 
