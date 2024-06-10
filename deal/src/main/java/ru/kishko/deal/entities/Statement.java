@@ -3,7 +3,7 @@ package ru.kishko.deal.entities;
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.GenericGenerator;
-import ru.kishko.deal.dtos.jsonb.LoanOfferJsonb;
+import ru.kishko.deal.dtos.LoanOfferDto;
 import ru.kishko.deal.dtos.jsonb.StatusHistoryJsonb;
 import ru.kishko.deal.enums.ApplicationStatus;
 
@@ -46,8 +46,8 @@ public class Statement {
     private Date creationDate;
 
     @Embedded
-    @Column(name = "applied_offer")
-    private LoanOfferJsonb appliedOffer;
+    @Column(name = "applied_offer", columnDefinition = "jsonb")
+    private LoanOfferDto appliedOffer;
 
     @Column(name = "sign_date")
     private Timestamp signDate;
@@ -56,7 +56,7 @@ public class Statement {
     private Integer sesCode;
 
     @ElementCollection
-    @Column(name = "status_history")
+    @Column(name = "status_history", columnDefinition = "jsonb")
     private List<StatusHistoryJsonb> statusHistory;
 
     @Override

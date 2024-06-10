@@ -18,12 +18,14 @@ databaseChangeLog:
                   constraints:
                     foreignKey: true
                     references: client(client_id)
+                    foreignKeyName: FK_STATEMENT_CLIENT
               - column:
                   name: credit_id
                   type: UUID
                   constraints:
                     foreignKey: true
                     references: credit(credit_id)
+                    foreignKeyName: FK_STATEMENT_CREDIT
               - column:
                   name: status
                   type: VARCHAR(255)

@@ -3,6 +3,7 @@ package ru.kishko.deal.dtos;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import javax.persistence.Column;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -17,6 +18,7 @@ import java.util.UUID;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class LoanOfferDto {
 
+    @Column(name = "statement_id", insertable = false, updatable = false)
     @NotNull(message = "Statement ID cannot be null")
     UUID statementId;
 

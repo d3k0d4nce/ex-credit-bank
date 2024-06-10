@@ -3,7 +3,7 @@ package ru.kishko.deal.entities;
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.GenericGenerator;
-import ru.kishko.deal.dtos.jsonb.PaymentScheduleJsonb;
+import ru.kishko.deal.dtos.PaymentScheduleElementDto;
 import ru.kishko.deal.enums.CreditStatus;
 
 import javax.persistence.*;
@@ -44,8 +44,8 @@ public class Credit {
     private BigDecimal psk;
 
     @ElementCollection
-    @Column(name = "payment_schedule")
-    private List<PaymentScheduleJsonb> paymentSchedule;
+    @Column(name = "payment_schedule", columnDefinition = "jsonb")
+    private List<PaymentScheduleElementDto> paymentSchedule;
 
     @Column(name = "insurance_enabled")
     private Boolean isInsuranceEnabled;

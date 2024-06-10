@@ -56,11 +56,11 @@ public class Client {
     private Integer dependentAmount;
 
     @Embedded
-    @Column(name = "passport")
+    @Column(name = "passport", columnDefinition = "jsonb")
     private PassportJsonb passport;
 
     @Embedded
-    @Column(name = "employment")
+    @Column(name = "employment", columnDefinition = "jsonb")
     private EmploymentJsonb employment;
 
     @Column(name = "account_number")
