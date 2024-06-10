@@ -12,9 +12,9 @@ spring:
     show_sql: true
   main:
     web-application-type: servlet
-#  liquibase:
-#    change-log: classpath:liquibase/changelog.yaml
-#    enabled: true
+  liquibase:
+    change-log: classpath:liquibase/changelog.yaml
+    enabled: true
 
 server:
   port: 8081
