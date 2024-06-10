@@ -1,0 +1,180 @@
+openapi: 3.0.0
+info:
+  title: DealController API
+  version: 1.0.0
+servers:
+  - url: http://localhost:8081
+paths:
+  /deal/statement:
+    post:
+      summary: Calculate possible loan conditions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoanStatementRequestDto'
+      responses:
+        '200':
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LoanOfferDto'
+        '400':
+          description: Bad Request
+  /deal/offer/select:
+    post:
+      summary: Select a loan offer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoanOfferDto'
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+  /deal/calculate/{statementId}:
+    post:
+      summary: Finish registration and calculate final loan terms
+      parameters:
+        - in: path
+          name: statementId
+          schema:
+            type: string
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FinishRegistrationRequestDto'
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+components:
+  schemas:
+    LoanStatementRequestDto:
+      type: object
+      properties:
+        amount:
+          type: number
+          format: float
+          description: Loan amount
+        term:
+          type: integer
+          format: int32
+          description: Loan term in months
+        firstName:
+          type: string
+          description: First name
+        lastName:
+          type: string
+          description: Last name
+        middleName:
+          type: string
+          description: Middle name
+        email:
+          type: string
+          format: email
+          description: Email address
+        birthdate:
+          type: string
+          format: date
+          description: Birthdate
+        passportSeries:
+          type: string
+          description: Passport series
+        passportNumber:
+          type: string
+          description: Passport number
+    LoanOfferDto:
+      type: object
+      properties:
+        statementId:
+          type: string
+          format: uuid
+          description: Statement ID
+        requestedAmount:
+          type: number
+          format: float
+          description: Requested loan amount
+        totalAmount:
+          type: number
+          format: float
+          description: Total loan amount
+        term:
+          type: integer
+          format: int32
+          description: Loan term in months
+        monthlyPayment:
+          type: number
+          format: float
+          description: Monthly payment
+        rate:
+          type: number
+          format: float
+          description: Interest rate
+        isInsuranceEnabled:
+          type: boolean
+          description: Insurance enabled flag
+        isSalaryClient:
+          type: boolean
+          description: Salary client flag
+    FinishRegistrationRequestDto:
+      type: object
+      properties:
+        gender:
+          type: string
+          enum: [MALE, FEMALE, NON_BINARY]
+          description: Gender
+        maritalStatus:
+          type: string
+          enum: [SINGLE, MARRIED, DIVORCED, WIDOW_WIDOWER]
+          description: Marital status
+        dependentAmount:
+          type: integer
+          format: int32
+          description: Number of dependents
+        passportIssueDate:
+          type: string
+          format: date
+          description: Passport issue date
+        passportIssueBranch:
+          type: string
+          description: Passport issue branch
+        employment:
+          $ref: '#/components/schemas/EmploymentDto'
+        accountNumber:
+          type: string
+          description: Account number
+    EmploymentDto:
+      type: object
+      properties:
+        employmentStatus:
+          type: string
+          enum: [EMPLOYED, UNEMPLOYED, SELF_EMPLOYED, BUSINESS_OWNER]
+          description: Employment status
+        employerINN:
+          type: string
+          description: Employer INN
+        salary:
+          type: number
+          format: float
+          description: Salary
+        position:
+          type: string
+          enum: [WORKER, OWNER, TOP_MANAGER, MID_MANAGER]
+          description: Position
+        workExperienceTotal:
+          type: integer
+          format: int32
+          description: Total work experience in months
+        workExperienceCurrent:
+          type: integer
+          format: int32
+          description: Work experience at current employer in months
