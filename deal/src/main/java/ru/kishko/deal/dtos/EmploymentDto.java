@@ -9,8 +9,10 @@ import ru.kishko.deal.enums.EmploymentStatus;
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
 
-@Data
+@Getter
+@Setter
 @Builder
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)

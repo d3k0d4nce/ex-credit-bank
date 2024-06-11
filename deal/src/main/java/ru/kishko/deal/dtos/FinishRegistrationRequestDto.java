@@ -3,7 +3,6 @@ package ru.kishko.deal.dtos;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import ru.kishko.deal.annotations.ValidEnum;
-import ru.kishko.deal.enums.EmploymentStatus;
 import ru.kishko.deal.enums.Gender;
 import ru.kishko.deal.enums.MaritalStatus;
 
@@ -11,8 +10,10 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
 
-@Data
+@Getter
+@Setter
 @Builder
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)

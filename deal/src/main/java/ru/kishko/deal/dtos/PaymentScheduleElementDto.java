@@ -7,11 +7,13 @@ import javax.persistence.Embeddable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@Data
+@Getter
+@Setter
 @Builder
+@ToString
+@Embeddable
 @AllArgsConstructor
 @NoArgsConstructor
-@Embeddable
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class PaymentScheduleElementDto {
     Integer number;

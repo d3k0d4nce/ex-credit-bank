@@ -11,8 +11,10 @@ import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.UUID;
 
-@Data
+@Getter
+@Setter
 @Builder
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
